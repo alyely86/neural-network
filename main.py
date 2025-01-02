@@ -22,17 +22,47 @@ class neuralNetwork:
         #activaion function is the sigmoid function
         self.activation_function = lambda x: sp.expit(x)
         
-    def train():
+    def train(self,inputs_list,targets_list):
+        #convert inputs list to 2d array
+        inputs = numpy.array(inputs_list,ndmin=2).T
+        targets = numpy.array(targets_list,ndmin=2).T
+
+        # calculate signals into hidden layer
+        hidden_inputs = numpy.dot(self.wih,inputs)
+        # calculate the signals emerging from hidden layer
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+
+        #clculate signals into final output layer 
+        final_inputs = numpy.dot(self.who, hidden_outputs)
+        # calculate the signals emerging from final output layer 
+        final_outputs = self.activation_function(final_inputs)
+        
         pass
 
-    def query():
-        pass
+
+    def query(self,input_list):
+        # convert inputs list to 2d array
+        inputs = numpy.array(input_list,ndmin=2).T
+
+        #calculate signals into hidden layer
+        hidden_inputs = numpy.dot(self.wih, inputs)
+        # caculate the signals emerging from hidden layer
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+        # calculate signals into final output layer
+        final_inputs = numpy.dot(self.who,hidden_outputs)
+        # calculate the signals emerging from final outputs layer
+        final_outputs = self.activation_function(final_inputs)
+
+        return final_outputs
 
 
 input_nodes = 3
 hidden_nodes = 3
 output_nodes = 3
 
-learning_rate = 0.5
+learning_rate = 0.3
 
 n = neuralNetwork(input_nodes,hidden_nodes,output_nodes,learning_rate)
+print(n.query([1.0,0.5,-1.5]))
